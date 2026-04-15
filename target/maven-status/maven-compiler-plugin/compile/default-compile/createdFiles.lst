@@ -1,0 +1,5 @@
+ru\shaporenko\intern\task_time_tracker\entity\Employee.class
+ru\shaporenko\intern\task_time_tracker\entity\TimeRecord.class
+ru\shaporenko\intern\task_time_tracker\entity\enums\TaskStatus.class
+ru\shaporenko\intern\task_time_tracker\entity\Task.class
+ru\shaporenko\intern\task_time_tracker\TaskTimeTrackerApplication.class
