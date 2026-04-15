@@ -9,6 +9,8 @@ import ru.shaporenko.intern.task_time_tracker.entity.Task;
 import ru.shaporenko.intern.task_time_tracker.entity.enums.TaskStatus;
 import ru.shaporenko.intern.task_time_tracker.mapper.TaskMapper;
 
+import java.security.InvalidParameterException;
+
 @Service
 public class TaskService {
 
@@ -20,22 +22,62 @@ public class TaskService {
 
     @Transactional(readOnly = true)
     public TaskResponse getById(Long id) {
+        if (id == null || id <= 0) {
+            throw new InvalidParameterException("Invalid task id: " + id);
+        }
+
         Task task = taskMapper.findById(id);
+        if (task == null){
+            throw new RuntimeException("Task not found with id: " + id);
+        }
         return convertToResponse(task);
     }
 
     @Transactional
-    public TaskResponse createTask(TaskCreateDto task) {
-        return convertToResponse(taskMapper.create(task));
+    public TaskResponse createTask(TaskCreateDto dto) {
+        Task task = new Task();
+        task.setTitle(dto.getTitle());
+        task.setDescription(dto.getDescription());
+        task.setStatus(dto.getStatus());
+
+        taskMapper.create(task);
+
+        return convertToResponse(task);
     }
 
+    @Transactional
     public TaskResponse updateStatus(Long id, TaskStatus status) {
+        if (id == null || id <= 0) {
+            throw new InvalidParameterException("Invalid task id: " + id);
+        }
+
+        if (status == null) {
+            throw new InvalidParameterException("Status cannot be null");
+        }
+
+        Task existingTask = taskMapper.findById(id);
+        if (existingTask == null) {
+            throw new RuntimeException("Task not found with id: " + id);
+        }
+        if (existingTask.getStatus() == status) {
+            return convertToResponse(existingTask);
+        }
+
         TaskUpdateDto taskUpdate = new TaskUpdateDto(id, status);
+
         return convertToResponse(taskMapper.updateStatus(taskUpdate));
     }
 
     @Transactional
     public void deleteTask(Long id) {
+        if (id == null || id <= 0) {
+            throw new InvalidParameterException("Invalid task id: " + id);
+        }
+
+        if (taskMapper.findById(id) == null) {
+            throw new RuntimeException("Cannot delete. Task not found with id: " + id);
+        }
+
         taskMapper.delete(id);
     }
 
