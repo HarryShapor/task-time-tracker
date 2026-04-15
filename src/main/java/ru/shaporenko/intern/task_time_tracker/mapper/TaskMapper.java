@@ -1,7 +1,7 @@
 package ru.shaporenko.intern.task_time_tracker.mapper;
 
 import org.apache.ibatis.annotations.*;
-import ru.shaporenko.intern.task_time_tracker.dto.TaskUpdate;
+import ru.shaporenko.intern.task_time_tracker.dto.task.TaskUpdateDto;
 import ru.shaporenko.intern.task_time_tracker.entity.Task;
 
 @Mapper
@@ -12,7 +12,7 @@ public interface TaskMapper {
     void create(Task task);
 
     @Update("UPDATE task SET status=#{status} WHERE id=#{id}")
-    void updateStatus(TaskUpdate task);
+    void updateStatus(TaskUpdateDto task);
 
     @Delete("DELETE FROM task WHERE id=#{id}")
     Task delete(@Param("id") Long id);
