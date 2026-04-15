@@ -26,7 +26,7 @@ public class TaskController {
 
     @PostMapping()
     public ResponseEntity<TaskResponse> createTask(@Valid @RequestBody TaskCreateDto task){
-        TaskResponse response = taskService.create(task);
+        TaskResponse response = taskService.createTask(task);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
     }
@@ -40,7 +40,7 @@ public class TaskController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id){
-        taskService.delete(id);
+        taskService.deleteTask(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

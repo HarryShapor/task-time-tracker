@@ -22,7 +22,7 @@ public class TimeRecordController {
 
     @GetMapping("{id}")
     public ResponseEntity<TimeRecordResponse> getTimeRecord(@PathVariable("id") Long id){
-        TimeRecordResponse response = timeRecordService.get(id);
+        TimeRecordResponse response = timeRecordService.getTimeRecord(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -38,13 +38,13 @@ public class TimeRecordController {
     @PostMapping()
     public ResponseEntity<TimeRecordResponse> createTimeRecord(
             @Valid @RequestBody TimeRecordCreateDto timeRecord){
-        TimeRecordResponse response = timeRecordService.create(timeRecord);
+        TimeRecordResponse response = timeRecordService.createTimeRecord(timeRecord);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTimeRecord(@PathVariable Long id){
-        timeRecordService.delete(id);
+        timeRecordService.deleteTimeRecord(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
