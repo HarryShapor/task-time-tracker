@@ -1,5 +1,6 @@
 package ru.shaporenko.intern.task_time_tracker.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.shaporenko.intern.task_time_tracker.dto.task.TaskCreateDto;
@@ -12,13 +13,10 @@ import ru.shaporenko.intern.task_time_tracker.mapper.TaskMapper;
 import java.security.InvalidParameterException;
 
 @Service
+@RequiredArgsConstructor
 public class TaskService {
 
     private final TaskMapper taskMapper;
-
-    public TaskService(TaskMapper taskMapper) {
-        this.taskMapper = taskMapper;
-    }
 
     @Transactional(readOnly = true)
     public TaskResponse getById(Long id) {
