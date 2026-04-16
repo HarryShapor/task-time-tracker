@@ -1,13 +1,13 @@
 services:
   postgres:
     image: postgres:17
-    container_name: task-tracker-db
+    container_name: task-time-tracker-db
     environment:
       POSTGRES_DB: task_time_tracker
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 7magic2024zer0
     ports:
-      - "5433:5432"
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
