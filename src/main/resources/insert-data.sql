@@ -9,8 +9,7 @@ ALTER SEQUENCE time_record_id_seq RESTART WITH 1;
 INSERT INTO employee (firstname, lastname, middlename) VALUES
 ('Иван', 'Иванов', 'Иванович'),
 ('Петр', 'Петров', 'Петрович'),
-('Андрей', 'Шапоренко', 'Сергеевич'),
-
+('Андрей', 'Шапоренко', 'Сергеевич');
 
 INSERT INTO task (title, description, status) VALUES
 ('Разработать API', 'Создать REST API для учета времени', 'NEW'),
