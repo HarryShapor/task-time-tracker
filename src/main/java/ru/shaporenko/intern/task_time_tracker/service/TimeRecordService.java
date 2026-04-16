@@ -69,6 +69,7 @@ public class TimeRecordService {
         }
 
         BigDecimal totalHours = BigDecimal.valueOf(timeRecords.stream()
+                .filter(r -> r.getStartTime() != null && r.getEndTime() != null)
                 .mapToDouble(r -> Duration.between(r.getStartTime(), r.getEndTime()).toHours())
                 .sum());
 
@@ -125,9 +126,15 @@ public class TimeRecordService {
 
     private TimeRecordResponse convertToResponse(TimeRecord timeRecord) {
         Task task = taskMapper.findById(timeRecord.getTaskId());
+        if (task == null){
+            throw new RuntimeException("Task not found with id: " + timeRecord.getTaskId());
+        }
         TaskBriefResponse taskBrief = new TaskBriefResponse(task.getId(), task.getTitle());
 
         Employee employee = employeeMapper.findById(timeRecord.getEmployeeId());
+        if (employee == null){
+            throw new RuntimeException("Employee not found with id: " + timeRecord.getEmployeeId());
+        }
         EmployeeBriefResponse employeeBrief = new EmployeeBriefResponse(employee.getId(),
                 employee.getFirstname(), employee.getLastname());
 

@@ -64,8 +64,9 @@ public class TaskService {
         }
 
         TaskUpdateDto taskUpdate = new TaskUpdateDto(id, status);
+        taskMapper.updateStatus(taskUpdate);
 
-        return convertToResponse(taskMapper.updateStatus(taskUpdate));
+        return convertToResponse(taskMapper.findById(id));
     }
 
     @Transactional

@@ -15,17 +15,17 @@ public interface TaskMapper {
     @Update("UPDATE task " +
             "SET status=#{status} " +
             "WHERE id=#{id}")
-    Task updateStatus(TaskUpdateDto task);
+    void updateStatus(TaskUpdateDto task);
 
     @Delete("DELETE FROM task " +
             "WHERE id=#{id}")
-    Task delete(@Param("id") Long id);
+    void delete(@Param("id") Long id);
 
     @Select("SELECT *" +
             " FROM task " +
             "WHERE id=#{id}")
     Task findById(@Param("id") Long id);
 
-    
+
 
 }

@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS time_record
     employee_id BIGINT NOT NULL,
     task_id BIGINT NOT NULL,
     start_time TIMESTAMP NOT NULL,
-    end_time TIMESTAMP,
+    end_time TIMESTAMP NOT NULL,
     comment_task TEXT,
 
 	CONSTRAINT fk_time_records_task
