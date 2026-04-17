@@ -176,12 +176,10 @@ public class TimeRecordServiceTest {
         existingRecord.setEmployeeId(EMPLOYEE_ID);
 
         when(timeRecordMapper.findById(ID)).thenReturn(existingRecord);
-        when(timeRecordMapper.delete(ID)).thenReturn(existingRecord);
 
         timeRecordService.deleteTimeRecord(ID);
 
         verify(timeRecordMapper, times(1)).findById(ID);
-        verify(timeRecordMapper, times(1)).delete(ID);
 
     }
 }

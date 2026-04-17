@@ -57,16 +57,8 @@ PostgreSQL будет доступен на `localhost:5432`.
 
 ## Запуск приложения
 
-### Вариант 1. Через профиль local (application-local.properties)
 
-1. В файл `src/main/resources/application-local.properties` задать креды.
-2. Запустить с активным профилем `local`:
-
-```bash
-mvn spring-boot:run -Dspring-boot.run.profiles=local
-```
-
-### Вариант 2. Через переменные окружения
+### Вариант 1. Через переменные окружения
 
 Пример для Windows PowerShell:
 
@@ -75,6 +67,15 @@ $env:DB_URL="jdbc:postgresql://localhost:5432/task_time_tracker"
 $env:DB_USER="postgres"
 $env:DB_PASSWORD="postgres"
 mvn spring-boot:run
+```
+
+### Вариант 2. Через профиль local (application-local.properties)
+
+1. В файл `src/main/resources/application-local.properties` задать креды.
+2. Запустить с активным профилем `local`:
+
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
 ## Документация API (Swagger)

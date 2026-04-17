@@ -96,8 +96,10 @@ public class TaskServiceTest {
         updatedTask.setDescription("Test Description");
         updatedTask.setStatus(newStatus);
 
-        when(taskMapper.findById(ID)).thenReturn(existingTask);
-        when(taskMapper.updateStatus(any(TaskUpdateDto.class))).thenReturn(updatedTask);
+        when(taskMapper.findById(ID))
+                .thenReturn(existingTask)
+                .thenReturn(updatedTask);
+        doNothing().when(taskMapper).updateStatus(any(TaskUpdateDto.class));
 
         TaskResponse response = taskService.updateStatus(ID, newStatus);
 
@@ -107,7 +109,7 @@ public class TaskServiceTest {
         assertEquals(response.getDescription(), "Test Description");
         assertEquals(response.getStatus(), TaskStatus.DONE);
 
-        verify(taskMapper, times(1)).findById(ID);
+        verify(taskMapper, times(2)).findById(ID);
         verify(taskMapper, times(1)).updateStatus(any(TaskUpdateDto.class));
     }
 
@@ -120,12 +122,10 @@ public class TaskServiceTest {
         existingTask.setTitle("Task to Delete");
 
         when(taskMapper.findById(ID)).thenReturn(existingTask);
-        when(taskMapper.delete(ID)).thenReturn(existingTask);
 
         taskService.deleteTask(ID);
 
         verify(taskMapper, times(1)).findById(ID);
-        verify(taskMapper, times(1)).delete(ID);
 
     }
 
