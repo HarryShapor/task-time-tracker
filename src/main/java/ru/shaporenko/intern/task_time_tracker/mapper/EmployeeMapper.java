@@ -9,6 +9,7 @@ public interface EmployeeMapper {
 
     @Insert("INSERT INTO employee(firstname, lastname, middlename)" +
             "VALUES(#{firstname}, #{lastname}, #{middlename})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     void create(Employee employee);
 
     @Delete("DELETE FROM employee WHERE id=#{id}")
