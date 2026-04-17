@@ -11,6 +11,7 @@ import ru.shaporenko.intern.task_time_tracker.dto.timeRecord.TimeRecordsResponse
 import ru.shaporenko.intern.task_time_tracker.entity.Employee;
 import ru.shaporenko.intern.task_time_tracker.entity.Task;
 import ru.shaporenko.intern.task_time_tracker.entity.TimeRecord;
+import ru.shaporenko.intern.task_time_tracker.exception.ResourceNotFoundException;
 import ru.shaporenko.intern.task_time_tracker.mapper.EmployeeMapper;
 import ru.shaporenko.intern.task_time_tracker.mapper.TaskMapper;
 import ru.shaporenko.intern.task_time_tracker.mapper.TimeRecordMapper;
@@ -39,7 +40,7 @@ public class TimeRecordService {
 
         TimeRecord timeRecord = timeRecordMapper.findById(id);
         if (timeRecord == null) {
-            throw new RuntimeException("TimeRecord not found with id: " + id);
+            throw new ResourceNotFoundException("TimeRecord not found with id: " + id);
         }
 
         return convertToResponse(timeRecord);
@@ -81,12 +82,12 @@ public class TimeRecordService {
 
         Task task = taskMapper.findById(timeRecordDto.getTaskId());
         if (task == null) {
-            throw new RuntimeException("Task not found with id: " + timeRecordDto.getTaskId());
+            throw new ResourceNotFoundException("Task not found with id: " + timeRecordDto.getTaskId());
         }
 
         Employee employee = employeeMapper.findById(timeRecordDto.getEmployeeId());
         if (employee == null) {
-            throw new RuntimeException("Employee not found with id: " + timeRecordDto.getEmployeeId());
+            throw new ResourceNotFoundException("Employee not found with id: " + timeRecordDto.getEmployeeId());
         }
 
         if (timeRecordDto.getStartTime() == null) {
@@ -117,7 +118,7 @@ public class TimeRecordService {
         }
 
         if (timeRecordMapper.findById(id) == null){
-            throw new RuntimeException("Cannot delete. TimeRecord not found with id: " + id);
+            throw new ResourceNotFoundException("Cannot delete. TimeRecord not found with id: " + id);
 
         }
 
@@ -127,13 +128,13 @@ public class TimeRecordService {
     private TimeRecordResponse convertToResponse(TimeRecord timeRecord) {
         Task task = taskMapper.findById(timeRecord.getTaskId());
         if (task == null){
-            throw new RuntimeException("Task not found with id: " + timeRecord.getTaskId());
+            throw new ResourceNotFoundException("Task not found with id: " + timeRecord.getTaskId());
         }
         TaskBriefResponse taskBrief = new TaskBriefResponse(task.getId(), task.getTitle());
 
         Employee employee = employeeMapper.findById(timeRecord.getEmployeeId());
         if (employee == null){
-            throw new RuntimeException("Employee not found with id: " + timeRecord.getEmployeeId());
+            throw new ResourceNotFoundException("Employee not found with id: " + timeRecord.getEmployeeId());
         }
         EmployeeBriefResponse employeeBrief = new EmployeeBriefResponse(employee.getId(),
                 employee.getFirstname(), employee.getLastname());

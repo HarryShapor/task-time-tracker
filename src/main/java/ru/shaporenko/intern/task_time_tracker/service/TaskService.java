@@ -8,9 +8,11 @@ import ru.shaporenko.intern.task_time_tracker.dto.task.TaskResponse;
 import ru.shaporenko.intern.task_time_tracker.dto.task.TaskUpdateDto;
 import ru.shaporenko.intern.task_time_tracker.entity.Task;
 import ru.shaporenko.intern.task_time_tracker.entity.enums.TaskStatus;
+import ru.shaporenko.intern.task_time_tracker.exception.InvalidParameterException;
+import ru.shaporenko.intern.task_time_tracker.exception.ResourceNotFoundException;
+import ru.shaporenko.intern.task_time_tracker.exception.BusinessRuleException;
 import ru.shaporenko.intern.task_time_tracker.mapper.TaskMapper;
 
-import java.security.InvalidParameterException;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +28,7 @@ public class TaskService {
 
         Task task = taskMapper.findById(id);
         if (task == null){
-            throw new RuntimeException("Task not found with id: " + id);
+            throw new ResourceNotFoundException("Task not found with id: " + id);
         }
         return convertToResponse(task);
     }
@@ -55,8 +57,12 @@ public class TaskService {
 
         Task existingTask = taskMapper.findById(id);
         if (existingTask == null) {
-            throw new RuntimeException("Task not found with id: " + id);
+            throw new ResourceNotFoundException("Task not found with id: " + id);
         }
+        if (existingTask.getStatus() == TaskStatus.DONE && status != TaskStatus.DONE) {
+            throw new BusinessRuleException("Cannot change status of completed task");
+        }
+
         if (existingTask.getStatus() == status) {
             return convertToResponse(existingTask);
         }
@@ -74,7 +80,7 @@ public class TaskService {
         }
 
         if (taskMapper.findById(id) == null) {
-            throw new RuntimeException("Cannot delete. Task not found with id: " + id);
+            throw new ResourceNotFoundException("Cannot delete. Task not found with id: " + id);
         }
 
         taskMapper.delete(id);
