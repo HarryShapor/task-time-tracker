@@ -41,3 +41,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Local secrets ###
+src/main/resources/application-local.properties
+.env
